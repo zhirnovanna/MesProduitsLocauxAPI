@@ -5,19 +5,13 @@
 
 Get project from git repository
 
-In API folder run :
+Run :
 alias composer='/usr/local/bin/composer.phar'
 ```
 composer install
 ```
 
-To generate jwt secret key for authentification run in API folder :
+To generate jwt secret key for authentification run :
 ```
 php artisan jwt:secret
-```
-
-In front folder run :
-
-```
-npm install
 ```
