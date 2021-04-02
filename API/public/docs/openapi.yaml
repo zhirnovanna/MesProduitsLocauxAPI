@@ -1,0 +1,772 @@
+openapi: 3.0.3
+info:
+    title: 'Mesproduitslocaux API'
+    description: ''
+    version: 1.0.0
+servers:
+    -
+        url: 'http://localhost'
+paths:
+    /api/categories/count:
+        get:
+            summary: 'Return the total number of entries for categories in database'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: integer
+                                example: 3
+            tags:
+                - 'Category management'
+            security: []
+    /api/categories:
+        get:
+            summary: 'Return a json listing of the categories.'
+            description: ''
+            parameters:
+                -
+                    in: query
+                    name: offset
+                    description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                    example: 12
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                        example: 12
+                -
+                    in: query
+                    name: limit
+                    description: 'Number of categories to return. Default all. If specified offset must be specified too.'
+                    example: 7
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Number of categories to return. Default all. If specified offset must be specified too.'
+                        example: 7
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example: []
+            tags:
+                - 'Category management'
+            security: []
+        post:
+            summary: 'Store a newly created category in database storage.'
+            description: 'Return the category info as json.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Category management'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the category, must be unique and between 3 and 45 characters.'
+                                    example: pariatur
+                            required:
+                                - name
+            security: []
+    '/api/categories/{category}':
+        get:
+            summary: 'Return a json of the category info corresponding to specified id.'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                404:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    error: 'Resource not found for model App\Models\Category'
+                                    code: '404'
+                                properties:
+                                    error: { type: string, example: 'Resource not found for model App\Models\Category' }
+                                    code: { type: string, example: '404' }
+            tags:
+                - 'Category management'
+            security: []
+        put:
+            summary: 'Update the category specified by id in database storage.'
+            description: 'Return a json of the category info.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Category management'
+            requestBody:
+                required: false
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the category, must be unique and between 3 and 45 characters.'
+                                    example: recusandae
+            security: []
+        delete:
+            summary: 'Remove the category specified by id from database storage.'
+            description: 'Return json with removed category id in ''id'' key and action performed in ''action'' key.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Category management'
+            security: []
+        parameters:
+            -
+                in: path
+                name: category
+                description: 'The ID of the category.'
+                example: 9
+                required: true
+                schema:
+                    type: integer
+    /api/products/count:
+        get:
+            summary: 'Return the total number of entries for products in database'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: integer
+                                example: 4
+            tags:
+                - 'Product management'
+            security: []
+    /api/products:
+        get:
+            summary: 'Return a json listing of the products.'
+            description: ''
+            parameters:
+                -
+                    in: query
+                    name: offset
+                    description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                    example: null
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                        example: null
+                -
+                    in: query
+                    name: limit
+                    description: 'Number of products to return. Default all. If specified offset must be specified too.'
+                    example: null
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Number of products to return. Default all. If specified offset must be specified too.'
+                        example: null
+                -
+                    in: query
+                    name: region
+                    description: 'Id of the region the returned products must be in'
+                    example: 1
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Id of the region the returned products must be in'
+                        example: 1
+                -
+                    in: query
+                    name: category
+                    description: 'Id of the category the returned products must belong to'
+                    example: 1
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Id of the category the returned products must belong to'
+                        example: 1
+                -
+                    in: query
+                    name: search
+                    description: 'Terms researched in the product''s name'
+                    example: null
+                    required: false
+                    schema:
+                        type: string
+                        description: 'Terms researched in the product''s name'
+                        example: null
+                -
+                    in: query
+                    name: max_price
+                    description: 'Maximum price of the returned products'
+                    example: 300
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Maximum price of the returned products'
+                        example: 300
+                -
+                    in: query
+                    name: min_price
+                    description: 'Minimum price of the returned products'
+                    example: 10
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Minimum price of the returned products'
+                        example: 10
+                -
+                    in: query
+                    name: sorting
+                    description: 'Sorting options, defaults to order by id. Existing options : price_asc price_desc alphabet_asc alphabet_desc.'
+                    example: price_asc
+                    required: false
+                    schema:
+                        type: string
+                        description: 'Sorting options, defaults to order by id. Existing options : price_asc price_desc alphabet_asc alphabet_desc.'
+                        example: price_asc
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { id: 21, name: 'Test incrémentation id', description: 'Ceci est une description test pour ce produit.', price: '200.00', quantity: 3, image: 'https://picsum.photos/200/300', category_id: 1, region_id: 1, category_name: 'Catégorie test', region_name: grand_est }
+            tags:
+                - 'Product management'
+            security: []
+        post:
+            summary: 'Store a newly created product in database storage.'
+            description: 'Return the product info as json'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Product management'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the product, must be unique and between 10 and 45 characters.'
+                                    example: maiores
+                                description:
+                                    type: string
+                                    description: 'Description of the product, must be 1000 characters maximum.'
+                                    example: dolore
+                                price:
+                                    type: number
+                                    description: 'Price of the product, must be numeric and positive.'
+                                    example: 276545482.6
+                                quantity:
+                                    type: integer
+                                    description: 'Quantity in stock of the product, must be an integer and positive.'
+                                    example: 11
+                                image:
+                                    type: string
+                                    description: 'URL link for the photo of the product, must be a valid URL.'
+                                    example: distinctio
+                                category_id:
+                                    type: integer
+                                    description: 'The id of the category the product belongs to, must exist in categories table.'
+                                    example: 15
+                                region_id:
+                                    type: integer
+                                    description: 'The id of the region where the product is, must exist in regions table.'
+                                    example: 7
+                            required:
+                                - name
+                                - description
+                                - price
+                                - quantity
+                                - image
+                                - category_id
+                                - region_id
+            security: []
+    '/api/products/{product}':
+        get:
+            summary: 'Return a json of the product info corresponding to specified id.'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                404:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    error: 'Resource not found for model App\Models\Product'
+                                    code: '404'
+                                properties:
+                                    error: { type: string, example: 'Resource not found for model App\Models\Product' }
+                                    code: { type: string, example: '404' }
+            tags:
+                - 'Product management'
+            security: []
+        put:
+            summary: 'Update the product specified by id in database storage.'
+            description: 'Return a json of the product info.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Product management'
+            requestBody:
+                required: false
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the product, must be unique and between 10 and 45 characters.'
+                                    example: quia
+                                description:
+                                    type: string
+                                    description: 'Description of the product, must be 1000 characters maximum.'
+                                    example: ut
+                                price:
+                                    type: number
+                                    description: 'Price of the product, must be numeric and positive.'
+                                    example: 48179.1589545
+                                quantity:
+                                    type: integer
+                                    description: 'Quantity in stock of the product, must be an integer and positive.'
+                                    example: 5
+                                image:
+                                    type: string
+                                    description: 'URL link for the photo of the product, must be a valid URL.'
+                                    example: laborum
+                                category_id:
+                                    type: integer
+                                    description: 'The id of the category the product belongs to, must exist in categories table.'
+                                    example: 10
+                                region_id:
+                                    type: integer
+                                    description: 'The id of the region where the product is, must exist in regions table.'
+                                    example: 6
+            security: []
+        delete:
+            summary: 'Remove the product specified by id from database storage.'
+            description: 'Return json with removed product id in ''id'' key and action performed in ''action'' key.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Product management'
+            security: []
+        parameters:
+            -
+                in: path
+                name: product
+                description: 'The ID of the product.'
+                example: 15
+                required: true
+                schema:
+                    type: integer
+    /api/regions/count:
+        get:
+            summary: 'Return the total number of entries for regions in database'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: integer
+                                example: 13
+            tags:
+                - 'Region management'
+            security: []
+    /api/regions:
+        get:
+            summary: 'Return a json listing of the regions.'
+            description: ''
+            parameters:
+                -
+                    in: query
+                    name: offset
+                    description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                    example: 16
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Point in the array where to start the set of returned data. Default 0. If specified limit must be specified too.'
+                        example: 16
+                -
+                    in: query
+                    name: limit
+                    description: 'Number of regions to return. Default all. If specified offset must be specified too.'
+                    example: 13
+                    required: false
+                    schema:
+                        type: integer
+                        description: 'Number of regions to return. Default all. If specified offset must be specified too.'
+                        example: 13
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example: []
+            tags:
+                - 'Region management'
+            security: []
+        post:
+            summary: 'Store a newly created region in database storage.'
+            description: 'Return the region info as json'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Region management'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the region, must be unique and between 3 and 45 characters.'
+                                    example: minima
+                            required:
+                                - name
+            security: []
+    '/api/regions/{region}':
+        get:
+            summary: 'Return a json of the region info corresponding to specified id.'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    id: 7
+                                    name: centre
+                                properties:
+                                    id: { type: integer, example: 7 }
+                                    name: { type: string, example: centre }
+            tags:
+                - 'Region management'
+            security: []
+        put:
+            summary: 'Update the region specified by id in database storage.'
+            description: 'Return a json of the region info.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Region management'
+            requestBody:
+                required: false
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: 'Name of the region, must be unique and between 3 and 45 characters.'
+                                    example: in
+            security: []
+        delete:
+            summary: 'Remove the region specified by id from database storage.'
+            description: 'Return json with removed region id in ''id'' key and action performed in ''action'' key.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - 'Region management'
+            security: []
+        parameters:
+            -
+                in: path
+                name: region
+                description: 'The ID of the region.'
+                example: 7
+                required: true
+                schema:
+                    type: integer
