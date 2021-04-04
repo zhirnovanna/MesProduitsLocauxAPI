@@ -51,12 +51,11 @@ class ProductController extends Controller
             ->maxPrice()
             ->minPrice();
 
-        if(!empty(request()->offset) && !empty(request()->limit) 
-        && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
+        && intval(request()->offset) >= 0 && intval(request()->limit) > 0) {
 
             $products = $products->offset(intval(request()->offset))
             ->limit(intval(request()->limit));
-
         }
 
         switch(request()->sorting) {
@@ -194,10 +193,22 @@ class ProductController extends Controller
     /**
      * Return the total number of entries for products in database
      *
+     * @queryParam region integer Id of the region the returned products must be in Example: 1
+     * @queryParam category integer Id of the category the returned products must belong to Example: 1
+     * @queryParam search string Terms researched in the product's name No-example
+     * @queryParam max_price integer Maximum price of the returned products Example: 300
+     * @queryParam min_price integer Minimum price of the returned products Example: 10
+     * 
      * @return \Illuminate\Http\Response
      */
     public function total()
     {
-        return Product::count();
+        $products = Product::region()
+            ->category()
+            ->search()
+            ->maxPrice()
+            ->minPrice();
+
+        return $products->count();
     }
 }

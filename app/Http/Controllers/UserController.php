@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!empty(request()->offset) && !empty(request()->limit) 
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
         && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
 
             return User::offset(intval(request()->offset))
@@ -78,5 +78,15 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['action' => 'deleted user', 'id' => $userId], 200);
+    }
+
+    /**
+     * Return the total number of entries for users in database
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function total()
+    {
+        return User::count();
     }
 }

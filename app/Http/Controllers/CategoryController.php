@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if(!empty(request()->offset) && !empty(request()->limit) 
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
         && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
 
             return Category::offset(intval(request()->offset))
