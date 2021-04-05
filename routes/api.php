@@ -20,9 +20,14 @@ use App\Http\Controllers\UserController;
 
 Route::group(['middleware' => ['json.response']], function () {
     Route::get('products/count', [ProductController::class, 'total']);
+    Route::get('products/names', [ProductController::class, 'takenProductNames']);
     Route::get('categories/count', [CategoryController::class, 'total']);
+    Route::get('categories/names', [CategoryController::class, 'takenCategoryNames']);
     Route::get('regions/count', [RegionController::class, 'total']);
+    Route::get('regions/names', [RegionController::class, 'takenRegionNames']);
     Route::get('users/count', [UserController::class, 'total']);
+    Route::get('users/emails', [UserController::class, 'takenUserEmails']);
+
     Route::apiResources([
         'products' => ProductController::class,
         'categories' => CategoryController::class,

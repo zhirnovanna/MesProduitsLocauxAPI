@@ -133,4 +133,21 @@ class RegionController extends Controller
     {
         return Region::count();
     }
+
+    /**
+     * Return an array of all the names of all the regions
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenRegionNames()
+    {
+        $regionsArray = [];
+        $regions = Region::select('regions.name')->get();
+
+        foreach($regions as $region) {
+            $regionsArray[] = $region->name;
+        }
+
+        return $regionsArray;
+    }
 }

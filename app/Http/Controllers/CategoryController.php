@@ -133,4 +133,21 @@ class CategoryController extends Controller
     {
         return Category::count();
     }
+
+        /**
+     * Return an array of all the names of all the categories
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenCategoryNames()
+    {
+        $categoriesArray = [];
+        $categories = Category::select('categories.name')->get();
+
+        foreach($categories as $category) {
+            $categoriesArray[] = $category->name;
+        }
+
+        return $categoriesArray;
+    }
 }

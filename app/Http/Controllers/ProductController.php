@@ -210,4 +210,21 @@ class ProductController extends Controller
 
         return $products->count();
     }
+
+    /**
+     * Return an array of all the names of all the products
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenProductNames()
+    {
+        $productsArray = [];
+        $products = Product::select('products.name')->get();
+
+        foreach($products as $product) {
+            $productsArray[] = $product->name;
+        }
+
+        return $productsArray;
+    }
 }

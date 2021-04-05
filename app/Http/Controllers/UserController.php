@@ -89,4 +89,21 @@ class UserController extends Controller
     {
         return User::count();
     }
+
+    /**
+     * Return an array of all the emails of all the users
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenUserEmails()
+    {
+        $usersArray = [];
+        $users = User::select('users.email')->get();
+
+        foreach($users as $user) {
+            $usersArray[] = $user->email;
+        }
+
+        return $usersArray;
+    }
 }
