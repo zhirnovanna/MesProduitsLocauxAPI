@@ -102,7 +102,7 @@ class ProductController extends Controller
             'description' => 'required|max:1000',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'image' => 'required|url|max:45',
+            'image' => 'required',
             'category_id' => 'required|exists:categories,id',
             'region_id' => 'required|exists:regions,id',
         ]);
@@ -160,7 +160,6 @@ class ProductController extends Controller
             'description' => 'max:1000',
             'price' => 'numeric|min:0',
             'quantity' => 'integer|min:0',
-            'image' => 'url|max:45',
             'category_id' => 'exists:categories,id',
             'region_id' => 'exists:regions,id',
         ]);
