@@ -58,8 +58,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:45|unique:categories,name',
-            'icon' => 'max:45'
+            'name' => 'required|min:3|max:45|unique:categories,name'
         ]);
 
         if ($validator->fails()) {
@@ -97,8 +96,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'min:3|max:45|unique:categories,name,' . $category->id,
-            'icon' => 'max:45'
+            'name' => 'min:3|max:45|unique:categories,name,' . $category->id
         ]);
 
         if ($validator->fails()) {
