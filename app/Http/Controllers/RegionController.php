@@ -34,7 +34,7 @@ class RegionController extends Controller
      */
     public function index()
     {
-        if(!empty(request()->offset) && !empty(request()->limit) 
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
         && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
 
             return Region::offset(intval(request()->offset))
@@ -132,5 +132,22 @@ class RegionController extends Controller
     public function total()
     {
         return Region::count();
+    }
+
+    /**
+     * Return an array of all the names of all the regions
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenRegionNames()
+    {
+        $regionsArray = [];
+        $regions = Region::select('regions.name')->get();
+
+        foreach($regions as $region) {
+            $regionsArray[] = $region->name;
+        }
+
+        return $regionsArray;
     }
 }

@@ -51,12 +51,11 @@ class ProductController extends Controller
             ->maxPrice()
             ->minPrice();
 
-        if(!empty(request()->offset) && !empty(request()->limit) 
-        && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
+        && intval(request()->offset) >= 0 && intval(request()->limit) > 0) {
 
             $products = $products->offset(intval(request()->offset))
             ->limit(intval(request()->limit));
-
         }
 
         switch(request()->sorting) {
@@ -103,7 +102,7 @@ class ProductController extends Controller
             'description' => 'required|max:1000',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'image' => 'required|url|max:45',
+            'image' => 'required',
             'category_id' => 'required|exists:categories,id',
             'region_id' => 'required|exists:regions,id',
         ]);
@@ -161,7 +160,6 @@ class ProductController extends Controller
             'description' => 'max:1000',
             'price' => 'numeric|min:0',
             'quantity' => 'integer|min:0',
-            'image' => 'url|max:45',
             'category_id' => 'exists:categories,id',
             'region_id' => 'exists:regions,id',
         ]);
@@ -194,10 +192,39 @@ class ProductController extends Controller
     /**
      * Return the total number of entries for products in database
      *
+     * @queryParam region integer Id of the region the returned products must be in Example: 1
+     * @queryParam category integer Id of the category the returned products must belong to Example: 1
+     * @queryParam search string Terms researched in the product's name No-example
+     * @queryParam max_price integer Maximum price of the returned products Example: 300
+     * @queryParam min_price integer Minimum price of the returned products Example: 10
+     * 
      * @return \Illuminate\Http\Response
      */
     public function total()
     {
-        return Product::count();
+        $products = Product::region()
+            ->category()
+            ->search()
+            ->maxPrice()
+            ->minPrice();
+
+        return $products->count();
+    }
+
+    /**
+     * Return an array of all the names of all the products
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenProductNames()
+    {
+        $productsArray = [];
+        $products = Product::select('products.name')->get();
+
+        foreach($products as $product) {
+            $productsArray[] = $product->name;
+        }
+
+        return $productsArray;
     }
 }

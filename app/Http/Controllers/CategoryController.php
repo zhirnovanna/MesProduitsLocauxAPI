@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if(!empty(request()->offset) && !empty(request()->limit) 
+        if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
         && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
 
             return Category::offset(intval(request()->offset))
@@ -58,8 +58,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:45|unique:categories,name',
-            'icon' => 'max:45'
+            'name' => 'required|min:3|max:45|unique:categories,name'
         ]);
 
         if ($validator->fails()) {
@@ -97,8 +96,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'min:3|max:45|unique:categories,name,' . $category->id,
-            'icon' => 'max:45'
+            'name' => 'min:3|max:45|unique:categories,name,' . $category->id
         ]);
 
         if ($validator->fails()) {
@@ -134,5 +132,22 @@ class CategoryController extends Controller
     public function total()
     {
         return Category::count();
+    }
+
+        /**
+     * Return an array of all the names of all the categories
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function takenCategoryNames()
+    {
+        $categoriesArray = [];
+        $categories = Category::select('categories.name')->get();
+
+        foreach($categories as $category) {
+            $categoriesArray[] = $category->name;
+        }
+
+        return $categoriesArray;
     }
 }
