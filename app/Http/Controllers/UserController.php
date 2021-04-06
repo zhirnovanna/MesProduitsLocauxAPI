@@ -20,20 +20,13 @@ class UserController extends Controller
         if((!empty(request()->offset) || request()->offset == 0) && !empty(request()->limit) 
         && intval(request()->offset) >= 0 && intval(request()->limit) >= 0) {
 
-            $users = User::offset(intval(request()->offset))
+            return User::offset(intval(request()->offset))
             ->limit(intval(request()->limit))
             ->get();
 
         } else {
-            $users = User::all();
+            return User::all();
         }
-
-        return response()->json(
-            [
-                'status' => 'success',
-                'users' => $users->toArray()
-            ], 200);
-
     }
 
     /**
@@ -42,14 +35,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, $admin)
+    public function show(User $user)
     {
-        $user = User::find($admin);
-        return response()->json(
-            [
-                'status' => 'success',
-                'user' => $user->toArray()
-            ], 200);
+        return $user;
     }
 
     /**
