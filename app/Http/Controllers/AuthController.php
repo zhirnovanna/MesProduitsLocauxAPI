@@ -33,9 +33,7 @@ class AuthController extends Controller
 
         if ($token = $this->guard()->attempt($credentials)) {
             return $this->respondWithToken($token);
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
+        }else {return response()->json(['error' => 'Unauthorized'], 401);}
     }
 
     public function register(Request $request){

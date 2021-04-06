@@ -42,3 +42,9 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+Route::group(['middleware' => 'auth:api'], function(){
+    // Users
+    Route::get('users', 'UserController@index')->middleware('isAdmin');
+    Route::get('users/{admin}', 'UserController@show')->middleware('isAdminOrSelf');
+});
