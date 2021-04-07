@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PrivateUserResource;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+
 
 class AuthController extends Controller
 {
@@ -38,8 +40,9 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $user = User::create($request->only('email', 'firstname', 'lastname', 'password', 'admin', 'address','phone', 'pc', 'city'));
-
+        event(new Registered($user));
         return new PrivateUserResource($user);
+
     }
 
     /**
