@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\Resources\PrivateUserResource;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {
-    public function action(RegisterRequest $request){
-      // $user = User::create($request->only('email', 'firstname', 'lastname', 'password', 'admin', 'adress', 'pc'));
-
-      // return new PrivateUserResource($user);
-    }
+  event(new Registered($user));
 }
+
