@@ -51,7 +51,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'email|max:100|unique:users,email,' . $user->id,
-            'admin' => 'boolean'
+            'admin' => 'boolean',
+            'phone' => 'string|regex:/^0[1-9][0-9]{8}$/',
+            'lastname' => 'string|max:100',
+            'firstname' => 'string|max:100',
+            'address' => 'string|max:100',
+            'pc' => 'string|regex:/^[0-9]{5}$/',
+            'city' => 'string|max:45',
+
         ]);
 
         if ($validator->fails()) {
