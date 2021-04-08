@@ -61,11 +61,11 @@ Route::group([
 
 
 
-Route::group(['middleware' => 'auth:api'], function(){
+/*Route::group(['middleware' => 'auth:api'], function(){
     // Users
     Route::get('users', 'UserController@index')->middleware('isAdmin');
     Route::get('users/{admin}', 'UserController@show')->middleware('isAdminOrSelf');
-});
+});*/
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])
